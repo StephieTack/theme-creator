@@ -1,6 +1,6 @@
 import "./Color.css";
 
-export default function Color({ color }) {
+export default function ColorComponent({ color }) {
   return (
     <div
       className="color-card"
