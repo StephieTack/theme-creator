@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import ColorComponent from "./Components/Color/Color";
 import { initialColors } from "./lib/colors";
