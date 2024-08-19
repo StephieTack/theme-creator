@@ -2,3 +2,9 @@ body {
   font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   padding: 10px;
 }
+
+.color-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
