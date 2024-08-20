@@ -54,13 +54,17 @@ function App() {
     <>
       <h1>Theme Creator</h1>
       <ColorForm onSubmitColor={handleAddColor} />
-      <ul className="color-list">
-        {colors.map((color) => (
-          <li key={color.id}>
-            <ColorComponent color={color} onDelete={handleDeleteColor} />
-          </li>
-        ))}
-      </ul>
+      {colors.length === 0 ? (
+        <p>No colors.. start by adding one!</p> // Nachricht, wenn alle Farben gelöscht sind
+      ) : (
+        <ul className="color-list">
+          {colors.map((color) => (
+            <li key={color.id}>
+              <ColorComponent color={color} onDelete={handleDeleteColor} />
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   );
 }
