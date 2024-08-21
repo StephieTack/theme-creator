@@ -2,14 +2,14 @@ import ColorInput from "../ColorInput/ColorInput";
 import "./ColorForm.css";
 
 export default function ColorForm({
-  onSubmitColor,
+  onAddColor,
   initialData = { role: "some color", hex: "#123456", contrastText: "#ffffff" },
 }) {
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-    onSubmitColor(data);
+    const colorDa = Object.fromEntries(formData);
+    onAddColor(colorDa);
   }
 
   return (
