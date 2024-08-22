@@ -17,10 +17,9 @@ function App() {
     setColors(colors.filter((colorObject) => colorObject.id !== idToDelete));
   }
 
-  function handleEditColor(colorData) {
-    console.log("mytest");
-    // setEditColor(colorData);
-  }
+  // function handleEditColor(colorData?) {
+  //   console.log("mytest");
+  // }
 
   return (
     <>
@@ -36,7 +35,7 @@ function App() {
             <ColorComponent
               colora={colorNachMapping}
               onDeleteColor={handleDeleteColor}
-              onEditColor={handleEditColor}
+              // onEditColor={handleEditColor}
             />
           </li>
         ))}
