@@ -8,8 +8,8 @@ export default function ColorForm({
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const colorDa = Object.fromEntries(formData);
-    onAddColor(colorDa);
+    const colorData = Object.fromEntries(formData);
+    onAddColor(colorData);
   }
 
   return (

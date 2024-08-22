@@ -8,8 +8,8 @@ import ColorComponent from "./Components/ColorComponent/ColorComponent";
 function App() {
   const [colors, setColors] = useState(initialColors);
 
-  function handleAddColor(colorDat) {
-    const colorDataWithId = { ...colorDat, id: nanoid() };
+  function handleAddColor(colorData) {
+    const colorDataWithId = { ...colorData, id: nanoid() };
     setColors([colorDataWithId, ...colors]);
   }
 
@@ -17,24 +17,31 @@ function App() {
     setColors(colors.filter((colorObject) => colorObject.id !== idToDelete));
   }
 
+  function handleEditColor(colorData) {
+    console.log("mytest");
+    // setEditColor(colorData);
+  }
+
   return (
     <>
       <h1>Theme Creator</h1>
       <ColorForm onAddColor={handleAddColor} />
-      {colors.length === 0 ? (
+
+      {/* {colors.length === 0 ? (
         <p>No colors.. start by adding one!</p> // Nachricht, wenn alle Farben gelöscht sind
-      ) : (
-        <ul className="color-list">
-          {colors.map((colorNachMapping) => (
-            <li key={colorNachMapping.id}>
-              <ColorComponent
-                colora={colorNachMapping}
-                onDeleteColor={handleDeleteColor}
-              />
-            </li>
-          ))}
-        </ul>
-      )}
+      ) : ( */}
+      <ul className="color-list">
+        {colors.map((colorNachMapping) => (
+          <li key={colorNachMapping.id}>
+            <ColorComponent
+              colora={colorNachMapping}
+              onDeleteColor={handleDeleteColor}
+              onEditColor={handleEditColor}
+            />
+          </li>
+        ))}
+      </ul>
+      {/* )} */}
     </>
   );
 }

@@ -1,12 +1,10 @@
+import ColorForm from "../ColorForm/ColorForm";
 import "./ColorComponent.css";
 import { useState } from "react";
 
-export default function ColorComponent({ colora, onDeleteColor }) {
-  const [showExtraButtons, setShowExtraButtons] = useState(false);
-
-  // nun direkt im Button als Arrowfunction enthalten
-  // function handleToggleExtraButtons(){
-  // setShowExtraButtons(!showExtraButtons)}
+export default function ColorComponent({ colora, onDeleteColor, onEditColor }) {
+  const [editColor, setEditColor] = useState(colora);
+  //ist usestate colora korrekt?
 
   return (
     <div
@@ -19,17 +17,20 @@ export default function ColorComponent({ colora, onDeleteColor }) {
       <h3 className="color-card-headline">{colora.hex}</h3>
       <h4>{colora.role}</h4>
       <p>contrast: {colora.contrastText}</p>
-      {showExtraButtons ? (
-        <>
-          <p className="color-card-highlight">Really delete?</p>
-          <button onClick={() => setShowExtraButtons(false)}>Cancel</button>
-          <button onClick={() => onDeleteColor(colora.id)}>Delete</button>
-        </>
-      ) : (
-        <button onClick={() => setShowExtraButtons(!showExtraButtons)}>
-          delete
-        </button>
-      )}
+      <ColorForm />
+      <button onClick={() => onDeleteColor(colora.id)}>DELETE</button>
+      <button
+        onClick={
+          () => onEditColor(colora.hex, colora.contrastText, colora.role)
+          //stimmen die übergaben?
+        }
+      >
+        EDIT
+      </button>
+
+      <button onClick={() => setShowExtraButtons(!showExtraButtons)}>
+        delete
+      </button>
     </div>
   );
 }
