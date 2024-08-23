@@ -17,30 +17,45 @@ function App() {
     setColors(colors.filter((colorObject) => colorObject.id !== idToDelete));
   }
 
-  // function handleEditColor(colorData?) {
-  //   console.log("mytest");
-  // }
+  function handleEditColor(idToUpdate, updatedColor) {
+    // const foundColor = colors.find(function (colorObject) {
+    //   return colorObject.id === idToUpdate;
+    // });
+    // setColors([foundColor]);
+    const updatedColors = colors.map(function (color) {
+      if (color.id === idToUpdate) {
+        return {
+          ...color,
+          ...updatedColor,
+        };
+      } else {
+        return color;
+      }
+    });
+
+    setColors(updatedColors);
+  }
 
   return (
     <>
       <h1>Theme Creator</h1>
       <ColorForm onAddColor={handleAddColor} />
 
-      {/* {colors.length === 0 ? (
+      {colors.length === 0 ? (
         <p>No colors.. start by adding one!</p> // Nachricht, wenn alle Farben gelöscht sind
-      ) : ( */}
-      <ul className="color-list">
-        {colors.map((colorNachMapping) => (
-          <li key={colorNachMapping.id}>
-            <ColorComponent
-              colora={colorNachMapping}
-              onDeleteColor={handleDeleteColor}
-              // onEditColor={handleEditColor}
-            />
-          </li>
-        ))}
-      </ul>
-      {/* )} */}
+      ) : (
+        <ul className="color-list">
+          {colors.map((colorNachMapping) => (
+            <li key={colorNachMapping.id}>
+              <ColorComponent
+                colora={colorNachMapping}
+                onDeleteColor={handleDeleteColor}
+                onEditColor={handleEditColor}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   );
 }
