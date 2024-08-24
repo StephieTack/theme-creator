@@ -1,10 +1,15 @@
+import useLocalStorageState from "use-local-storage-state";
 import ColorForm from "../ColorForm/ColorForm";
 import "./ColorComponent.css";
-import { useState } from "react";
 
 export default function ColorComponent({ colora, onDeleteColor, onEditColor }) {
-  const [showExtraButtons, setShowExtraButtons] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [showExtraButtons, setShowExtraButtons] = useLocalStorageState(
+    "showExtraButtons",
+    { defaultValue: false }
+  );
+  const [isEditing, setIsEditing] = useLocalStorageState("isEditing", {
+    defaultValue: false,
+  });
 
   return (
     <div

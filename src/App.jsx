@@ -1,12 +1,14 @@
-import { useState } from "react";
 import "./App.css";
 import { initialColors } from "./lib/colors";
 import ColorForm from "./Components/ColorForm/ColorForm";
 import { nanoid } from "nanoid";
 import ColorComponent from "./Components/ColorComponent/ColorComponent";
+import useLocalStorageState from "use-local-storage-state";
 
 function App() {
-  const [colors, setColors] = useState(initialColors);
+  const [colors, setColors] = useLocalStorageState("colors", {
+    defaultValue: initialColors,
+  });
 
   function handleAddColor(colorData) {
     const colorDataWithId = { ...colorData, id: nanoid() };
