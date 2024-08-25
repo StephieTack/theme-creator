@@ -1,15 +1,33 @@
-import useLocalStorageState from "use-local-storage-state";
+import { useState, useEffect } from "react";
 import ColorForm from "../ColorForm/ColorForm";
 import "./ColorComponent.css";
 
 export default function ColorComponent({ colora, onDeleteColor, onEditColor }) {
-  const [showExtraButtons, setShowExtraButtons] = useLocalStorageState(
-    "showExtraButtons",
-    { defaultValue: false }
-  );
-  const [isEditing, setIsEditing] = useLocalStorageState("isEditing", {
-    defaultValue: false,
-  });
+  // shows two more buttons after clicking on delete button (cancel/delete)
+  const [showExtraButtons, setShowExtraButtons] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const [clipBoardText, setClipBoardText] = useState("");
+  const [clipboardConfirmation, setClipboardConfirmation] = useState("COPY");
+
+  function handleClipboardConfirmation() {
+    setClipboardConfirmation("SUCCESFULLY COPIED");
+
+    setTimeout(() => {
+      setClipboardConfirmation("COPY");
+    }, 3000);
+  }
+
+  useEffect(() => {
+    async function writeCopyToClipboard(text) {
+      await navigator.clipboard.writeText(text);
+      console.log("Text copied to clipboard:", text);
+    }
+
+    if (clipBoardText) {
+      writeCopyToClipboard(clipBoardText);
+    }
+  }, [clipBoardText]);
 
   return (
     <div
@@ -20,6 +38,14 @@ export default function ColorComponent({ colora, onDeleteColor, onEditColor }) {
       }}
     >
       <h3 className="color-card-headline">{colora.hex}</h3>
+      <button
+        onClick={() => {
+          setClipBoardText(colora.hex);
+          handleClipboardConfirmation();
+        }}
+      >
+        {clipboardConfirmation}
+      </button>
       <h4>{colora.role}</h4>
       <p>contrast: {colora.contrastText}</p>
 
