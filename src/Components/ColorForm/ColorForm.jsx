@@ -11,6 +11,7 @@ export default function ColorForm({
     const formData = new FormData(event.target);
     const colorDa = Object.fromEntries(formData);
     onAddColor(colorDa);
+    console.log(colorDa);
   }
 
   return (
