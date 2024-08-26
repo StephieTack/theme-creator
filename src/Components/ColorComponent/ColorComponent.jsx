@@ -8,6 +8,7 @@ export default function ColorComponent({
   onEditColor,
   onFetch,
 }) {
+  console.log("colora:", colora);
   // show two more buttons after clicking on delete button (cancel/delete)
   const [showExtraButtons, setShowExtraButtons] = useState(false);
 
@@ -20,9 +21,18 @@ export default function ColorComponent({
   const [clipBoardText, setClipBoardText] = useState("");
   const [clipboardConfirmation, setClipboardConfirmation] = useState("COPY");
 
-  // state to store the overall contrast score
-  const [overallContrastScore, setOverallContrastScore] = useState(null);
-  // console.log(responseData);
+  // copy text function
+  useEffect(() => {
+    async function writeCopyToClipboard(text) {
+      await navigator.clipboard.writeText(text);
+      console.log("Text copied to clipboard:", text);
+    }
+    if (clipBoardText) {
+      writeCopyToClipboard(clipBoardText);
+    }
+  }, [clipBoardText]);
+
+  // function to set copy button to successfully copied and back to copy after 3s
   function handleClipboardConfirmation() {
     setClipboardConfirmation("SUCCESFULLY COPIED");
 
@@ -31,16 +41,26 @@ export default function ColorComponent({
     }, 3000);
   }
 
+  // state to store the overall contrast score for the contast check
+  const [overallContrastScore, setOverallContrastScore] = useState(null);
+
+  // function for contrast check
   useEffect(() => {
-    async function writeCopyToClipboard(text) {
-      await navigator.clipboard.writeText(text);
-      console.log("Text copied to clipboard:", text);
+    async function fetchContrastScore() {
+      try {
+        const responseData = await onFetch({
+          contrastText: colora.contrastText,
+          hex: colora.hex,
+        });
+        setOverallContrastScore(responseData.overall); // Setzt den Overall-Wert
+        console.log("log responseData in colorcomponent:", responseData);
+      } catch (error) {
+        console.error("Error fetching contrast score:", error);
+      }
     }
 
-    if (clipBoardText) {
-      writeCopyToClipboard(clipBoardText);
-    }
-  }, [clipBoardText]);
+    fetchContrastScore();
+  }, [colora.contrastText, colora.hex]); // dependencies for useEffect
 
   return (
     <div
@@ -62,47 +82,6 @@ export default function ColorComponent({
       <h4>{colora.role}</h4>
       <p>contrast: {colora.contrastText}</p>
       <p>Overall Contrast Score: {overallContrastScore}</p>
-
-      {/* <button
-        onClick={async () => {
-          try {
-            const responseData = await onFetch({
-              contrastText: colora.contrastText,
-              hex: colora.hex,
-            });
-            setOverallContrastScore(responseData.overall); // Setzt den Overall-Wert
-            console.log("log responseData in colorcomponent:", responseData);
-          } catch (error) {
-            console.error("Error fetching contrast score:", error);
-          }
-        }}
-      >
-        testbutton for onfetch
-      </button> */}
-
-      <button
-        onClick={async () => {
-          try {
-            const responseData = await onFetch({
-              contrastText: colora.contrastText,
-              hex: colora.hex,
-            });
-
-            if (responseData && responseData.overall) {
-              setOverallContrastScore(responseData.overall); // Setzt den Overall-Wert
-            } else {
-              console.error(
-                "Error: 'overall' property is missing in responseData",
-                responseData
-              );
-            }
-          } catch (error) {
-            console.error("Error fetching contrast score:", error);
-          }
-        }}
-      >
-        testbutton for onfetch
-      </button>
 
       {/* conditionally render Delete and Cancel Button based on isEditing */}
       {!isEditing && (
