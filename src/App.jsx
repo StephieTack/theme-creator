@@ -21,9 +21,6 @@ function App() {
   }
 
   function handleEditColor(idToUpdate, updatedColor) {
-    console.log("Zu aktualisierende Farbe ID:", idToUpdate); // Logge die ID der Farbe
-    console.log("Aktualisierte Farbdaten:", updatedColor); // Logge die neuen Farbdaten
-
     // const foundColor = colors.find(function (colorObject) {
     //   return colorObject.id === idToUpdate;
     // });
@@ -42,32 +39,6 @@ function App() {
     setColors(updatedColors);
   }
 
-  async function handleContrastCheck(color) {
-    // dataObject: handling an object with two values to the api
-    const dataObject = {
-      colors: [color.hex, color.contrastText],
-    };
-    console.log("dataObject:", dataObject);
-
-    const response = await fetch(
-      "https://www.aremycolorsaccessible.com/api/are-they",
-      {
-        method: "POST",
-        body: JSON.stringify(dataObject),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    const responseData = await response.json();
-    console.log("responseData:", responseData);
-    console.log("responseData.overall:", responseData.overall);
-
-    // return result from the api
-    return responseData;
-  }
-
   return (
     <>
       <h1>Theme Creator</h1>
@@ -84,7 +55,6 @@ function App() {
                 colora={colorNachMapping}
                 onDeleteColor={handleDeleteColor}
                 onEditColor={handleEditColor}
-                onFetch={handleContrastCheck}
               />
             </li>
           ))}

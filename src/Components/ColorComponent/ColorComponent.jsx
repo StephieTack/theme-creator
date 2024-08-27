@@ -2,13 +2,7 @@ import { useState, useEffect } from "react";
 import ColorForm from "../ColorForm/ColorForm";
 import "./ColorComponent.css";
 
-export default function ColorComponent({
-  colora,
-  onDeleteColor,
-  onEditColor,
-  onFetch,
-}) {
-  console.log("colora:", colora);
+export default function ColorComponent({ colora, onDeleteColor, onEditColor }) {
   // show two more buttons after clicking on delete button (cancel/delete)
   const [showExtraButtons, setShowExtraButtons] = useState(false);
 
@@ -47,13 +41,29 @@ export default function ColorComponent({
   // function for contrast check
   useEffect(() => {
     async function fetchContrastScore() {
+      const dataObject = {
+        colors: [colora.hex, colora.contrastText],
+      };
+      console.log("dataObject:", dataObject);
+
       try {
-        const responseData = await onFetch({
-          contrastText: colora.contrastText,
-          hex: colora.hex,
-        });
+        const response = await fetch(
+          "https://www.aremycolorsaccessible.com/api/are-they",
+          {
+            method: "POST",
+            body: JSON.stringify(dataObject),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Error fetching contrast score");
+        }
+
+        const responseData = await response.json();
         setOverallContrastScore(responseData.overall); // Setzt den Overall-Wert
-        console.log("log responseData in colorcomponent:", responseData);
       } catch (error) {
         console.error("Error fetching contrast score:", error);
       }
@@ -103,7 +113,6 @@ export default function ColorComponent({
       {/* condition when in edit mode */}
       {isEditing ? (
         <>
-          {console.log("Rendering ColorForm für:", colora)}
           <ColorForm
             initialData={colora}
             onAddColor={(updatedColor) => {
@@ -117,7 +126,6 @@ export default function ColorComponent({
       ) : (
         <button
           onClick={() => {
-            console.log("Bearbeitungsmodus aktivieren für Farbe:", colora);
             setIsEditing(true);
           }}
         >
