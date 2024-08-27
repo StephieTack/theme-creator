@@ -72,13 +72,16 @@ export default function ColorComponent({ colora, onDeleteColor, onEditColor }) {
     fetchContrastScore();
   }, [colora.contrastText, colora.hex]); // dependencies for useEffect
 
-  const getScoreColor = () => {
+  //checks the score and renders the correct color per score
+  const handleScoreColor = () => {
     if (overallContrastScore === "Yup") {
-      return "green";
+      return "lightgreen";
     } else if (overallContrastScore === "Kinda") {
       return "orange";
-    } else {
+    } else if (overallContrastScore === "Nope") {
       return "red";
+    } else {
+      return "null";
     }
   };
 
@@ -104,7 +107,7 @@ export default function ColorComponent({ colora, onDeleteColor, onEditColor }) {
       <div>
         <p
           className="color-card-score"
-          style={{ backgroundColor: getScoreColor() }}
+          style={{ backgroundColor: handleScoreColor() }}
         >
           Overall Contrast Score: {overallContrastScore}
         </p>
