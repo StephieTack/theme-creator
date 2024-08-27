@@ -72,6 +72,16 @@ export default function ColorComponent({ colora, onDeleteColor, onEditColor }) {
     fetchContrastScore();
   }, [colora.contrastText, colora.hex]); // dependencies for useEffect
 
+  const getScoreColor = () => {
+    if (overallContrastScore === "Yup") {
+      return "green";
+    } else if (overallContrastScore === "Kinda") {
+      return "orange";
+    } else {
+      return "red";
+    }
+  };
+
   return (
     <div
       className="color-card"
@@ -91,7 +101,14 @@ export default function ColorComponent({ colora, onDeleteColor, onEditColor }) {
       </button>
       <h4>{colora.role}</h4>
       <p>contrast: {colora.contrastText}</p>
-      <p>Overall Contrast Score: {overallContrastScore}</p>
+      <div>
+        <p
+          className="color-card-score"
+          style={{ backgroundColor: getScoreColor() }}
+        >
+          Overall Contrast Score: {overallContrastScore}
+        </p>
+      </div>
 
       {/* conditionally render Delete and Cancel Button based on isEditing */}
       {!isEditing && (
@@ -99,8 +116,12 @@ export default function ColorComponent({ colora, onDeleteColor, onEditColor }) {
           {showExtraButtons ? (
             <div className="delete-confirmation">
               <p className="color-card-highlight">Really delete?</p>
-              <button onClick={() => setShowExtraButtons(false)}>CANCEL</button>
-              <button onClick={() => onDeleteColor(colora.id)}>DELETE</button>
+              <div className="button-grou">
+                <button onClick={() => setShowExtraButtons(false)}>
+                  CANCEL
+                </button>
+                <button onClick={() => onDeleteColor(colora.id)}>DELETE</button>
+              </div>
             </div>
           ) : (
             <button onClick={() => setShowExtraButtons(!showExtraButtons)}>
@@ -112,7 +133,7 @@ export default function ColorComponent({ colora, onDeleteColor, onEditColor }) {
 
       {/* condition when in edit mode */}
       {isEditing ? (
-        <>
+        <div className="button-grou">
           <ColorForm
             initialData={colora}
             onAddColor={(updatedColor) => {
@@ -122,7 +143,7 @@ export default function ColorComponent({ colora, onDeleteColor, onEditColor }) {
             isEditing={true}
           />
           <button onClick={() => setIsEditing(false)}>CANCEL</button>
-        </>
+        </div>
       ) : (
         <button
           onClick={() => {

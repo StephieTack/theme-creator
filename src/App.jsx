@@ -4,7 +4,6 @@ import ColorForm from "./Components/ColorForm/ColorForm";
 import { nanoid } from "nanoid";
 import ColorComponent from "./Components/ColorComponent/ColorComponent";
 import useLocalStorageState from "use-local-storage-state";
-import { useEffect, useState } from "react";
 
 function App() {
   const [colors, setColors] = useLocalStorageState("colors", {
