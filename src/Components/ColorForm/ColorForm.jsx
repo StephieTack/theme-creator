@@ -6,6 +6,7 @@ export default function ColorForm({
   isEditing,
   initialData = { role: "some color", hex: "#123456", contrastText: "#ffffff" },
 }) {
+  console.log("Initiale Daten für das Formular:", initialData);
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);

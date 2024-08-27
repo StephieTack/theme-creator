@@ -103,6 +103,7 @@ export default function ColorComponent({
       {/* condition when in edit mode */}
       {isEditing ? (
         <>
+          {console.log("Rendering ColorForm für:", colora)}
           <ColorForm
             initialData={colora}
             onAddColor={(updatedColor) => {
@@ -116,6 +117,7 @@ export default function ColorComponent({
       ) : (
         <button
           onClick={() => {
+            console.log("Bearbeitungsmodus aktivieren für Farbe:", colora);
             setIsEditing(true);
           }}
         >

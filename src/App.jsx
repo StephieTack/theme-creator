@@ -21,6 +21,9 @@ function App() {
   }
 
   function handleEditColor(idToUpdate, updatedColor) {
+    console.log("Zu aktualisierende Farbe ID:", idToUpdate); // Logge die ID der Farbe
+    console.log("Aktualisierte Farbdaten:", updatedColor); // Logge die neuen Farbdaten
+
     // const foundColor = colors.find(function (colorObject) {
     //   return colorObject.id === idToUpdate;
     // });
@@ -38,32 +41,6 @@ function App() {
 
     setColors(updatedColors);
   }
-
-  // function handleContrastCheck(color) {
-  //   async function postFetch() {
-  //     const dataObject = {
-  //       colors: [color.hex, color.contrastText],
-  //     };
-  //     console.log("dataObject:", dataObject);
-  //     console.log("Log out of function handleContrastCheck");
-  //     const response = await fetch(
-  //       "https://www.aremycolorsaccessible.com/api/are-they",
-  //       {
-  //         method: "POST",
-  //         body: JSON.stringify(dataObject),
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     const responseData = await response.json();
-  //     console.log("Response Data:", responseData);
-  //     console.log("Response Data - value:overall:", responseData.overall);
-  //     return responseData.overall;
-  //   }
-
-  //   postFetch();
-  // }
 
   async function handleContrastCheck(color) {
     // dataObject: handling an object with two values to the api
@@ -87,7 +64,7 @@ function App() {
     console.log("responseData:", responseData);
     console.log("responseData.overall:", responseData.overall);
 
-    // result from the api
+    // return result from the api
     return responseData;
   }
 
