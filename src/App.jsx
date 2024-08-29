@@ -44,7 +44,8 @@ function App() {
       <ColorForm onAddColor={handleAddColor} />
 
       {colors.length === 0 ? (
-        <p>No colors.. start by adding one!</p> // Nachricht, wenn alle Farben gelöscht sind
+        // message when there is no color in the theme:
+        <p>No colors.. start by adding one!</p>
       ) : (
         <ul className="color-list">
           {colors.map((colorNachMapping) => (

@@ -1,6 +1,10 @@
 .color-card {
+  display: inline-block;
   margin: 0px 10px;
   padding: 5px;
+  min-width: 500px;
+  border: solid grey 1px;
+  border-radius: 8px;
 }
 
 .color-card-headline {
@@ -18,5 +22,14 @@
 }
 
 .delete-confirmation {
-  flex-direction: column;
+  /* flex-direction: column; */
+  padding: 12px 0px;
+}
+
+.color-card-score {
+  display: inline-flex;
+  padding: 4px 8px;
+  margin: 8px 0px;
+  color: black;
+  border-radius: 4px;
 }

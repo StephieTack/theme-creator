@@ -1,9 +1,8 @@
+import { useState } from "react";
 import useLocalStorageState from "use-local-storage-state";
 
 export default function ColorInput({ id, defaultValue }) {
-  const [inputValue, setInputValue] = useLocalStorageState(`inputValue-${id}`, {
-    defaultValue: defaultValue,
-  });
+  const [inputValue, setInputValue] = useState(defaultValue);
 
   function handleInputValue(event) {
     setInputValue(event.target.value);
